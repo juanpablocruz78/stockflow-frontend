@@ -1,0 +1,39 @@
+<div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow">
+
+  <h2 class="text-xl font-semibold mb-6">
+    {{ isEdit() ? 'Edit Product' : 'New Product' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="flex flex-col gap-4">
+
+    <!-- NAME -->
+    <div>
+      <label>Name</label>
+      <input formControlName="name" class="input" />
+      @if(form.controls.name.invalid && form.controls.name.touched) {
+        <p class="text-red-500 text-sm">Min 3 characters</p>
+      }
+    </div>
+
+    <!-- PRICE -->
+    <div>
+      <label>Price</label>
+      <input type="number" formControlName="price" class="input" />
+    </div>
+
+    <!-- STOCK -->
+    <div>
+      <label>Stock</label>
+      <input type="number" formControlName="stock" class="input" />
+    </div>
+
+    <button
+      [disabled]="loading()"
+      class="bg-blue-600 text-white py-2 rounded-lg"
+    >
+      {{ loading() ? 'Saving...' : 'Save' }}
+    </button>
+
+  </form>
+
+</div>

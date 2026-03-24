@@ -1,0 +1,110 @@
+<div class="bg-white p-6 rounded-2xl shadow">
+  <!-- HEADER -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold">Products</h2>
+
+    <button
+      (click)="createProduct()"
+      class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+    >
+      + New Product
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  @if (store.loading()) {
+    <div class="animate-pulse space-y-2">
+    @for (i of [1,2,3,4,5]; track i) {
+      <div class="h-6 bg-gray-200 rounded"></div>
+    }
+  </div>
+  }
+
+  <!-- ERROR -->
+  @if (store.error()) {
+    <div class="text-red-500">
+      {{ store.error() }}
+    </div>
+  }
+
+  <!-- EMPTY STATE -->
+  @if (!store.loading() && store.products().length === 0) {
+    <div class="text-center text-slate-400 py-10">No products found</div>
+  }
+
+  <input
+    type="text"
+    placeholder="Search..."
+    (input)="store.setSearch($any($event.target).value)"
+    class="border p-2 rounded mb-4"
+  />
+
+  <!-- TABLE -->
+  @if (!store.loading() && store.products().length > 0) {
+    <table class="w-full text-left">
+      <thead>
+        <tr class="border-b text-sm text-slate-500">
+          <th (click)="store.setSort('name')" class="cursor-pointer">Name</th>
+          <th (click)="store.setSort('price')" class="cursor-pointer">Price</th>
+          <th>Stock</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (p of store.products(); track p.id) {
+          <tr class="border-b hover:bg-slate-50">
+            <td class="py-3">{{ p.name }}</td>
+            <td>${{ p.price }}</td>
+            <td>{{ p.stock }}</td>
+
+            <td>
+              <button (click)="editProduct(p.id)" class="text-blue-600 hover:underline">
+                Edit
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <!-- PAGINATION -->
+  <div class="flex justify-between mt-6">
+    <button
+      (click)="store.prevPage()"
+      [disabled]="store.page() === 0"
+      class="px-4 py-2 border rounded"
+    >
+      Prev
+    </button>
+
+    <span> Page {{ store.page() + 1 }} / {{ store.totalPages() }} </span>
+
+    <button
+      (click)="store.nextPage()"
+      [disabled]="store.page() === store.totalPages() - 1"
+      class="px-4 py-2 border rounded"
+    >
+      Next
+    </button>
+  </div>
+
+  @if (selectedToDelete()) {
+    <div class="fixed inset-0 bg-black/30 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="mb-4">Are you sure?</p>
+
+        <div class="flex gap-2">
+          <button (click)="confirmDelete()" class="bg-red-600 text-white px-4 py-2 rounded">
+            Delete
+          </button>
+
+          <button (click)="selectedToDelete.set(null)" class="border px-4 py-2 rounded">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

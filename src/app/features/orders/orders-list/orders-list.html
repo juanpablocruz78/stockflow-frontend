@@ -1,0 +1,110 @@
+<div class="bg-white rounded-2xl shadow p-6">
+
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold">Orders</h2>
+
+    <!-- search -->
+    <input
+      type="text"
+      placeholder="Search orders..."
+      class="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none"
+    />
+  </div>
+
+  <!-- loading skeleton -->
+  @if (store.loading()) {
+
+    <div class="space-y-3">
+      @for (i of [1,2,3,4,5]; track i) {
+        <div class="h-12 bg-slate-100 animate-pulse rounded"></div>
+      }
+    </div>
+
+  } @else {
+
+  <!-- empty state -->
+  @if (store.orders().length === 0) {
+
+    <div class="text-center py-10 text-slate-500">
+      No orders found
+    </div>
+
+  } @else {
+
+  <table class="w-full text-left">
+
+    <thead>
+      <tr class="border-b text-slate-500 text-sm uppercase tracking-wide">
+        <th class="py-3 cursor-pointer">ID</th>
+        <th>Status</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @for (order of store.orders(); track order.id) {
+
+      <tr class="border-b hover:bg-slate-50 transition">
+
+        <td class="py-4 font-medium">
+          #{{order.id}}
+        </td>
+
+        <td>
+
+          <span
+            class="px-3 py-1 text-xs rounded-full font-medium"
+            [ngClass]="{
+              'bg-green-100 text-green-700': order.status === 'CONFIRMED',
+              'bg-yellow-100 text-yellow-700': order.status === 'PENDING',
+              'bg-red-100 text-red-700': order.status === 'CANCELLED'
+            }"
+          >
+            {{order.status}}
+          </span>
+
+        </td>
+
+        <td class="font-semibold">
+          ${{order.totalAmount}}
+        </td>
+
+      </tr>
+
+      }
+
+    </tbody>
+
+  </table>
+
+  <!-- pagination -->
+  <div class="flex justify-between items-center mt-6">
+
+    <button
+      (click)="store.prevPage()"
+      [disabled]="store.page() === 0"
+      class="px-4 py-2 border rounded-lg hover:bg-slate-100 disabled:opacity-40"
+    >
+      Previous
+    </button>
+
+    <span class="text-sm text-slate-500">
+      Page {{store.page() + 1}} / {{store.totalPages()}}
+    </span>
+
+    <button
+      (click)="store.nextPage()"
+      [disabled]="store.page() + 1 >= store.totalPages()"
+      class="px-4 py-2 border rounded-lg hover:bg-slate-100 disabled:opacity-40"
+    >
+      Next
+    </button>
+
+  </div>
+
+  }
+
+  }
+
+</div>

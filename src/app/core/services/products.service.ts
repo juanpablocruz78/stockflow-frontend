@@ -1,0 +1,34 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Product } from '../models/Product';
+import { Page } from '../models/Page';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProductsService {
+  private api = 'http://localhost:8080/api/products';
+
+  constructor(private http: HttpClient) {}
+
+  getProducts(page = 0, size = 10, search = '') {
+    return this.http.get<Page<Product>>(`${this.api}?page=${page}&size=${size}&search=${search}`);
+  }
+
+  createProduct(product: Product) {
+    return this.http.post(this.api, product);
+  }
+
+   update(id: number, product: Partial<Product>): Observable<Product> {
+    return this.http.put<Product>(`${this.api}/${id}`, product);
+  }
+
+  getById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.api}/${id}`);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`);
+  }
+}
