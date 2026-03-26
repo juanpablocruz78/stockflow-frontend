@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/Product';
 import { Page } from '../models/Page';
@@ -12,15 +12,21 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page = 0, size = 10, search = '') {
-    return this.http.get<Page<Product>>(`${this.api}?page=${page}&size=${size}&search=${search}`);
+  getProducts(page = 0, size = 10, search = '', sort = 'name') {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('search', search)
+      .set('sort', sort); // <--- Enviamos el criterio al backend
+
+    return this.http.get<Page<Product>>(this.api, { params });
   }
 
   createProduct(product: Product) {
     return this.http.post(this.api, product);
   }
 
-   update(id: number, product: Partial<Product>): Observable<Product> {
+  update(id: number, product: Partial<Product>): Observable<Product> {
     return this.http.put<Product>(`${this.api}/${id}`, product);
   }
 

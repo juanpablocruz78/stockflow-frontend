@@ -18,6 +18,7 @@ export class OrdersStore {
   private _totalPages = signal(0);
   readonly totalPages = this._totalPages.asReadonly();
 
+  private _sortDirection = signal<'asc' | 'desc'>('asc');
   private _page = signal(0);
   readonly page = this._page.asReadonly();
 
@@ -45,6 +46,23 @@ export class OrdersStore {
       },
       complete: () => this._loading.set(false)
     });
+  }
+  setSortById() {
+    // 1. Cambiamos la dirección (toggle)
+    const newDirection = this._sortDirection() === 'asc' ? 'desc' : 'asc';
+    this._sortDirection.set(newDirection);
+
+    // 2. Obtenemos el array actual y lo ordenamos
+    const sortedOrders = [...this._orders()].sort((a, b) => {
+      if (newDirection === 'asc') {
+        return a.id - b.id;
+      } else {
+        return b.id - a.id;
+      }
+    });
+
+    // 3. Actualizamos el signal (esto refresca la tabla automáticamente)
+    this._orders.set(sortedOrders);
   }
   nextPage() {
     this.load(this._page() + 1);

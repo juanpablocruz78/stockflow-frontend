@@ -1,68 +1,72 @@
-<div class="space-y-8">
+<div class="p-6">
 
-  <h1 class="text-2xl font-semibold">Dashboard</h1>
+  <!-- loading -->
+  @if (store.loading()) {
+    <p class="text-slate-500">Loading dashboard...</p>
+  }
 
-  <!-- metric cards -->
+  <!-- error -->
+  @if (store.error()) {
+    <p class="text-red-500">{{store.error()}}</p>
+  }
 
-  <div class="grid grid-cols-3 gap-6">
+  <!-- content -->
+  @if (store.data(); as d) {
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <p class="text-sm text-slate-500">Total Orders</p>
-      <p class="text-3xl font-bold mt-2">
-        {{totalOrders()}}
-      </p>
+    <!-- cards -->
+    <div class="grid grid-cols-4 gap-6 mb-6">
+
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="text-sm text-slate-500">Orders</p>
+        <p class="text-2xl font-bold">{{d.totalOrders}}</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="text-sm text-slate-500">Revenue</p>
+        <p class="text-2xl font-bold">${{d.totalRevenue}}</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="text-sm text-slate-500">Products</p>
+        <p class="text-2xl font-bold">{{d.totalProducts}}</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="text-sm text-slate-500">Low Stock</p>
+        <p class="text-2xl font-bold text-red-500">
+          {{d.lowStockProducts}}
+        </p>
+      </div>
+
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <p class="text-sm text-slate-500">Revenue</p>
-      <p class="text-3xl font-bold mt-2">
-        ${{revenue()}}
-      </p>
+    <!-- recent orders -->
+    <div class="bg-white p-6 rounded-xl shadow">
+
+      <h3 class="font-semibold mb-4">Recent Orders</h3>
+
+      <table class="w-full text-left">
+        <thead>
+          <tr class="text-sm text-slate-500 border-b">
+            <th>ID</th>
+            <th>Status</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (o of d.recentOrders; track o.id) {
+            <tr class="border-b">
+              <td>{{o.id}}</td>
+              <td>{{o.status}}</td>
+              <td>${{o.totalAmount}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
     </div>
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-      <p class="text-sm text-slate-500">Pending Orders</p>
-      <p class="text-3xl font-bold mt-2">
-        {{pendingOrders()}}
-      </p>
-    </div>
-
-  </div>
-
-  <!-- recent orders -->
-
-  <div class="bg-white rounded-2xl shadow p-6">
-
-    <h2 class="font-semibold mb-4">Recent Orders</h2>
-
-    <table class="w-full text-left">
-
-      <thead>
-        <tr class="text-sm text-slate-500 border-b">
-          <th class="py-3">Order</th>
-          <th>Status</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr class="border-b hover:bg-slate-50">
-          <td>#1021</td>
-          <td>CONFIRMED</td>
-          <td>$120</td>
-        </tr>
-
-        <tr class="border-b hover:bg-slate-50">
-          <td>#1022</td>
-          <td>PENDING</td>
-          <td>$85</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
+  }
 
 </div>

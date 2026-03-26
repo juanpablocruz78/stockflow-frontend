@@ -14,10 +14,10 @@
   <!-- LOADING -->
   @if (store.loading()) {
     <div class="animate-pulse space-y-2">
-    @for (i of [1,2,3,4,5]; track i) {
-      <div class="h-6 bg-gray-200 rounded"></div>
-    }
-  </div>
+      @for (i of [1, 2, 3, 4, 5]; track i) {
+        <div class="h-6 bg-gray-200 rounded"></div>
+      }
+    </div>
   }
 
   <!-- ERROR -->
@@ -32,20 +32,17 @@
     <div class="text-center text-slate-400 py-10">No products found</div>
   }
 
-  <input
-    type="text"
-    placeholder="Search..."
-    (input)="store.setSearch($any($event.target).value)"
-    class="border p-2 rounded mb-4"
-  />
-
   <!-- TABLE -->
   @if (!store.loading() && store.products().length > 0) {
     <table class="w-full text-left">
       <thead>
         <tr class="border-b text-sm text-slate-500">
-          <th (click)="store.setSort('name')" class="cursor-pointer">Name</th>
-          <th (click)="store.setSort('price')" class="cursor-pointer">Price</th>
+          <th (click)="store.setSort('name')" class="cursor-pointer hover:text-blue-600">
+            Name {{ store.sort() === 'name' ? '↑' : '' }}
+          </th>
+          <th (click)="store.setSort('price')" class="cursor-pointer hover:text-blue-600">
+            Price {{ store.sort() === 'price' ? '↑' : '' }}
+          </th>
           <th>Stock</th>
           <th></th>
         </tr>

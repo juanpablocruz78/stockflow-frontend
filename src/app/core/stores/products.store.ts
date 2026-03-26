@@ -37,6 +37,7 @@ export class ProductsStore {
   readonly search = this._search.asReadonly();
 
   private _sort = signal<'name' | 'price'>('name');
+  readonly sort = this._sort.asReadonly();
 
   constructor(private service: ProductsService) {}
 
@@ -44,11 +45,12 @@ export class ProductsStore {
     this._loading.set(true);
     this._error.set(null);
 
-    this.service.getProducts(page, 10, this._search()).subscribe({
+    this.service.getProducts(page, 10, this._search(), this._sort()).subscribe({
       next: (res) => {
         this._products.set(res.content);
         this._totalPages.set(res.totalPages);
         this._page.set(res.number);
+        this._loading.set(false);
       },
       error: () => {
         this._error.set('Error loading products');

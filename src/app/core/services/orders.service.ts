@@ -17,7 +17,7 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(page: number, size: number) {
-    return this.http.get<any>(`${this.api}?page=${page}&size=${size}`);
+  getOrders(page: number, size: number, sort: string = 'id') {
+    return this.http.get<any>(`${this.api}?page=${page}&size=${size}&sort=${sort}`);
   }
 }
