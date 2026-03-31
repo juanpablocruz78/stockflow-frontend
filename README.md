@@ -1,59 +1,59 @@
-# StockflowFrontend
+#  StockFlow Frontend – Modern Inventory Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+[![Angular Version](https://img.shields.io/badge/Angular-20.2-dd0031?style=for-the-badge&logo=angular)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## Development server
+StockFlow Frontend is a reactive, high-performance web application designed to manage stock, orders, and customers. Built with **Angular 20**, it leverages the latest framework features to provide a seamless user experience.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+##  Cutting-Edge Features (Angular 20)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **Signals-Based State Management:** Utilizing Angular Signals for fine-grained reactivity, ensuring optimal performance and minimal change detection cycles.
+- **Standalone Architecture:** 100% Standalone components for a lighter, more modular, and modern codebase.
+- **Control Flow Syntax:** Implementation of the new `@if`, `@for`, and `@switch` syntax for cleaner and more readable templates.
+- **Reactive Forms:** Robust validation for product entry and order creation.
+- **JWT Integration:** Secure communication with the StockFlow Spring Boot API using HTTP Interceptors.
 
-## Code scaffolding
+##  Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Framework:** Angular 20.2.1
+- **Styling:** Tailwind CSS / Angular Material (ajusta según lo que uses)
+- **State:** Signals & RxJS
+- **HTTP Client:** Native Angular HttpClient with specialized Interceptors for Auth.
+- **Build Tool:** Vite (default in Angular 20)
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+##  Getting Started
 
-```bash
-ng generate --help
-```
+### Prerequisites
+- Node.js (v20+ recommended)
+- Angular CLI: `npm install -g @angular/cli`
 
-## Building
+### Installation
+1. Clone the repo: `git clone https://github.com/juanpablocruz78/stockflow-frontend.git`
+2. Install dependencies: `npm install`
+3. Configure environment: Update `src/environments/environment.ts` with your Render Backend URL.
 
-To build the project run:
+### Development Server
+Run `ng serve` and navigate to `http://localhost:4200/`.
+
+---
+
+##  Building for Production
+
+To create a highly optimized production build:
 
 ```bash
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The artifacts will be stored in the dist/ directory, ready to be deployed to Vercel or Render.
 
-## Running unit tests
+Quality Assurance
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Contact & Links
+Juan Pablo Cruz Fullstack Developer | Java & Angular Specialist [LinkedIn Profile] | [Live Demo Link]
