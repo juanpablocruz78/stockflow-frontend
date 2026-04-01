@@ -55,5 +55,17 @@ Quality Assurance
 
 ng test
 
+---
+
+Test Credentials:
+
+Demo Access:
+
+User: admin
+
+Pass: 123456
+
+Note: The backend may take 40s to wake up due to Render's free plan.
+
 Contact & Links
 Juan Pablo Cruz Fullstack Developer | Java & Angular Specialist [LinkedIn Profile] | [Live Demo Link]
