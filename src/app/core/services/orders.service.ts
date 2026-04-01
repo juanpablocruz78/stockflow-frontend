@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Order } from '../models/order';
+import { environment } from '../../../environments/environment';
 
 export interface Page<T> {
   content: T[]
@@ -13,7 +12,7 @@ export interface Page<T> {
   providedIn: 'root',
 })
 export class OrdersService {
-  private api = 'http://localhost:8080/api/orders';
+  private api = `${environment.apiUrl}/orders`;
 
   constructor(private http: HttpClient) {}
 

@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-   private api = 'http://localhost:8080/api/dashboard';
+   private api = `${environment.apiUrl}/dashboard`;
 
   constructor(private http: HttpClient) {}
 
